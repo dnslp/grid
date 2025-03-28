@@ -24,6 +24,7 @@
       <span id="closeModal" class="close">&times;</span>
       <h2>Settings</h2>
       <form id="settingsForm">
+        <!-- Grid Settings -->
         <fieldset>
           <legend>Grid Settings</legend>
           <label for="gridRows">Rows:</label>
@@ -31,6 +32,8 @@
           <label for="gridCols">Columns:</label>
           <input type="number" id="gridCols" name="gridCols" min="1" value="3">
         </fieldset>
+
+        <!-- Card & Text Size Settings -->
         <fieldset>
           <legend>Card &amp; Text Size</legend>
           <label for="cardSize">Card Size (px):</label>
@@ -38,6 +41,8 @@
           <label for="textSize">Text Size (px):</label>
           <input type="number" id="textSize" name="textSize" min="10" value="16">
         </fieldset>
+
+        <!-- Appearance Settings -->
         <fieldset>
           <legend>Appearance</legend>
           <label for="backgroundColor">Background Color:</label>
@@ -47,6 +52,30 @@
           <label for="selectedBorder">Selected Border Color:</label>
           <input type="color" id="selectedBorder" name="selectedBorder" value="#007AFF">
         </fieldset>
+
+        <!-- Font Settings -->
+        <fieldset>
+          <legend>Font Settings</legend>
+          <label for="fontFamily">Font Family:</label>
+          <select id="fontFamily" name="fontFamily">
+            <option value="sans-serif">Sans Serif</option>
+            <option value="serif">Serif</option>
+            <option value="monospace">Monospace</option>
+            <option value="cursive">Script</option>
+          </select>
+          <label for="fontColor">Font Color:</label>
+          <input type="color" id="fontColor" name="fontColor" value="#333333">
+          <label>
+            <input type="checkbox" id="fontBold" name="fontBold">
+            Bold
+          </label>
+          <label>
+            <input type="checkbox" id="fontItalic" name="fontItalic">
+            Italic
+          </label>
+        </fieldset>
+
+        <!-- Text-to-Speech Settings -->
         <fieldset>
           <legend>Text-to-Speech</legend>
           <label for="voiceSelect">Voice:</label>
@@ -54,6 +83,8 @@
             <!-- Voices populated by JS -->
           </select>
         </fieldset>
+
+        <!-- Cards Configuration -->
         <fieldset id="cardsSettings">
           <legend>Cards Configuration</legend>
           <!-- For each card: label, phonetic pronunciation, and image upload -->
@@ -61,22 +92,3 @@
             <!-- Dynamically generated card settings -->
           </div>
         </fieldset>
-        <fieldset>
-          <legend>Save/Load Configuration</legend>
-          <label for="configName">Configuration Name:</label>
-          <input type="text" id="configName" name="configName" placeholder="My Config">
-          <button type="button" id="saveConfigBtn">Save Configuration</button>
-          <select id="loadConfigSelect">
-            <option value="">Load Saved Configuration</option>
-            <!-- Options populated by JS -->
-          </select>
-          <button type="button" id="loadConfigBtn">Load</button>
-        </fieldset>
-        <button type="submit">Apply Settings</button>
-      </form>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
