@@ -92,3 +92,32 @@
             <!-- Dynamically generated card settings -->
           </div>
         </fieldset>
+
+        <!-- Save/Load Configurations -->
+        <fieldset>
+          <legend>Save/Load Configuration</legend>
+          <label for="configName">Configuration Name:</label>
+          <input type="text" id="configName" name="configName" placeholder="My Config">
+          <button type="button" id="saveConfigBtn">Save Configuration</button>
+          <select id="loadConfigSelect">
+            <option value="">Load Saved Configuration</option>
+            <!-- Options populated by JS -->
+          </select>
+          <button type="button" id="loadConfigBtn">Load</button>
+        </fieldset>
+
+        <!-- Live Preview -->
+        <fieldset id="previewFieldset">
+          <legend>Preview</legend>
+          <!-- This example card updates instantly as settings change -->
+          <div id="exampleCard" class="card">Example Card</div>
+        </fieldset>
+
+        <button type="submit">Apply Settings</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
