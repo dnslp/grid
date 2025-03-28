@@ -122,3 +122,198 @@ function populateCardsSettings() {
       <label>Image:</label>
       <input type="file" data-index="${index}" class="card-image" accept="image/*">
       ${card.image ? `<img src="${card.image}" alt="Card ${index+1} Image" class="card-thumb">` : ''}
+      <hr>
+    `;
+    cardsListDiv.appendChild(cardDiv);
+    // Listen for image upload changes
+    cardDiv.querySelector('.card-image').addEventListener('change', handleImageUpload);
+    // Listen for label and phonetic updates
+    cardDiv.querySelector('.card-label').addEventListener('input', updateCardData);
+    cardDiv.querySelector('.card-phonetic').addEventListener('input', updateCardData);
+  });
+}
+
+// Handle image upload for a card
+function handleImageUpload(e) {
+  const index = e.target.getAttribute('data-index');
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      currentConfig.cards[index].image = evt.target.result;
+      populateCardsSettings();
+    }
+    reader.readAsDataURL(file);
+  }
+}
+
+// Update card data when label or phonetic input changes
+function updateCardData(e) {
+  const index = e.target.getAttribute('data-index');
+  if (e.target.classList.contains('card-label')) {
+    currentConfig.cards[index].label = e.target.value;
+  } else if (e.target.classList.contains('card-phonetic')) {
+    currentConfig.cards[index].phonetic = e.target.value;
+  }
+}
+
+// Generate the grid based on current configuration
+function generateGrid() {
+  const gridContainer = document.getElementById('gridContainer');
+  gridContainer.innerHTML = '';
+  gridContainer.style.gridTemplateColumns = `repeat(${currentConfig.gridCols}, ${currentConfig.cardSize}px)`;
+  gridContainer.style.gridTemplateRows = `repeat(${currentConfig.gridRows}, ${currentConfig.cardSize}px)`;
+  document.body.style.backgroundColor = currentConfig.backgroundColor;
+
+  // Adjust card array if grid dimensions changed
+  const expectedCount = currentConfig.gridRows * currentConfig.gridCols;
+  if (currentConfig.cards.length !== expectedCount) {
+    currentConfig.cards = createDefaultCards(currentConfig.gridRows, currentConfig.gridCols);
+  }
+
+  currentConfig.cards.forEach((card, index) => {
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('card');
+    cardDiv.style.width = currentConfig.cardSize + 'px';
+    cardDiv.style.height = currentConfig.cardSize + 'px';
+    cardDiv.style.fontSize = currentConfig.textSize + 'px';
+    cardDiv.style.backgroundColor = currentConfig.cardColor;
+    // Apply font settings
+    cardDiv.style.fontFamily = currentConfig.fontFamily;
+    cardDiv.style.color = currentConfig.fontColor;
+    cardDiv.style.fontWeight = currentConfig.fontBold ? 'bold' : 'normal';
+    cardDiv.style.fontStyle = currentConfig.fontItalic ? 'italic' : 'normal';
+    cardDiv.dataset.index = index;
+    cardDiv.innerHTML = `
+      ${card.image ? `<img src="${card.image}" alt="${card.label}" class="card-img">` : ''}
+      <span>${card.label}</span>
+    `;
+    cardDiv.addEventListener('click', () => {
+      selectCard(cardDiv, card);
+    });
+    gridContainer.appendChild(cardDiv);
+  });
+}
+
+// When a card is selected, add a highlight and speak the label (or its phonetic version)
+function selectCard(cardDiv, card) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  cardDiv.classList.add('selected');
+
+  const utterance = new SpeechSynthesisUtterance(card.phonetic || card.label);
+  const selectedVoice = voices.find(v => v.voiceURI === currentConfig.voiceURI);
+  if (selectedVoice) {
+    utterance.voice = selectedVoice;
+  }
+  window.speechSynthesis.speak(utterance);
+}
+
+// Update configuration and apply settings from the form
+function applySettings() {
+  // Check for grid dimension changes that would reset card data
+  const newRows = parseInt(document.getElementById('gridRows').value);
+  const newCols = parseInt(document.getElementById('gridCols').value);
+  if (newRows * newCols !== currentConfig.gridRows * currentConfig.gridCols) {
+    if (!confirm("Changing grid dimensions will reset all card labels and images. Do you want to proceed?")) {
+      return; // Abort if user cancels
+    }
+  }
+
+  // Update configuration with new settings
+  currentConfig.gridRows = newRows;
+  currentConfig.gridCols = newCols;
+  currentConfig.cardSize = parseInt(document.getElementById('cardSize').value);
+  currentConfig.textSize = parseInt(document.getElementById('textSize').value);
+  currentConfig.backgroundColor = document.getElementById('backgroundColor').value;
+  currentConfig.cardColor = document.getElementById('cardColor').value;
+  currentConfig.selectedBorder = document.getElementById('selectedBorder').value;
+  currentConfig.voiceURI = document.getElementById('voiceSelect').value;
+  currentConfig.fontFamily = document.getElementById('fontFamily').value;
+  currentConfig.fontColor = document.getElementById('fontColor').value;
+  currentConfig.fontBold = document.getElementById('fontBold').checked;
+  currentConfig.fontItalic = document.getElementById('fontItalic').checked;
+  // Card data is updated live via event listeners.
+  generateGrid();
+}
+
+// Update the live preview card in the settings modal based on current input values
+function updatePreview() {
+  const exampleCard = document.getElementById('exampleCard');
+  const cardSize = parseInt(document.getElementById('cardSize').value);
+  const textSize = parseInt(document.getElementById('textSize').value);
+  const cardColor = document.getElementById('cardColor').value;
+  const fontFamily = document.getElementById('fontFamily').value;
+  const fontColor = document.getElementById('fontColor').value;
+  const fontBold = document.getElementById('fontBold').checked;
+  const fontItalic = document.getElementById('fontItalic').checked;
+  
+  exampleCard.style.width = cardSize + 'px';
+  exampleCard.style.height = cardSize + 'px';
+  exampleCard.style.fontSize = textSize + 'px';
+  exampleCard.style.backgroundColor = cardColor;
+  exampleCard.style.fontFamily = fontFamily;
+  exampleCard.style.color = fontColor;
+  exampleCard.style.fontWeight = fontBold ? 'bold' : 'normal';
+  exampleCard.style.fontStyle = fontItalic ? 'italic' : 'normal';
+  // Also update border color for preview if desired
+  exampleCard.style.borderColor = document.getElementById('selectedBorder').value;
+}
+
+// Modal control functions
+function openModal() {
+  document.getElementById('settingsModal').style.display = 'block';
+  populateSettingsForm();
+  loadSavedConfigurations();
+  updatePreview(); // Ensure preview is up-to-date when opening
+}
+
+function closeModal() {
+  document.getElementById('settingsModal').style.display = 'none';
+}
+
+// Save current configuration in localStorage
+function saveConfig() {
+  const configName = document.getElementById('configName').value.trim();
+  if (!configName) {
+    alert('Please enter a configuration name.');
+    return;
+  }
+  let savedConfigs = JSON.parse(localStorage.getItem('aacConfigs')) || {};
+  savedConfigs[configName] = currentConfig;
+  localStorage.setItem('aacConfigs', JSON.stringify(savedConfigs));
+  alert('Configuration saved!');
+  loadSavedConfigurations();
+}
+
+// Load saved configurations into the select element
+function loadSavedConfigurations() {
+  const loadSelect = document.getElementById('loadConfigSelect');
+  loadSelect.innerHTML = `<option value="">Load Saved Configuration</option>`;
+  let savedConfigs = JSON.parse(localStorage.getItem('aacConfigs')) || {};
+  for (const name in savedConfigs) {
+    const option = document.createElement('option');
+    option.value = name;
+    option.textContent = name;
+    loadSelect.appendChild(option);
+  }
+}
+
+// Load a selected configuration from localStorage
+function loadConfig() {
+  const loadSelect = document.getElementById('loadConfigSelect');
+  const selectedName = loadSelect.value;
+  if (!selectedName) {
+    alert('Please select a configuration to load.');
+    return;
+  }
+  let savedConfigs = JSON.parse(localStorage.getItem('aacConfigs')) || {};
+  if (savedConfigs[selectedName]) {
+    currentConfig = savedConfigs[selectedName];
+    if (!currentConfig.voiceURI && voices.length > 0) {
+      currentConfig.voiceURI = voices[0].voiceURI;
+    }
+    populateSettingsForm();
+    generateGrid();
+    alert('Configuration loaded!');
+  }
+}
