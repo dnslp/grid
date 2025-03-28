@@ -198,6 +198,9 @@ function generateGrid() {
 
 // When a card is selected, add a highlight and speak the label (or its phonetic version)
 function selectCard(cardDiv, card) {
+  // Cancel any ongoing or queued speech
+  window.speechSynthesis.cancel();
+
   document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
   cardDiv.classList.add('selected');
 
