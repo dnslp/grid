@@ -1,4 +1,5 @@
 // Initialize default configuration
+console.log('v2')
 let currentConfig = {
   gridRows: 3,
   gridCols: 3,
