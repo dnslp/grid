@@ -231,7 +231,7 @@ function populateSettingsForm() {
   populateCardsSettings();
 }
 
-// Populate cards settings within the modal
+// In populateCardsSettings(), add an audio file input for each card:
 function populateCardsSettings() {
   const cardsListDiv = document.getElementById('cardsList');
   cardsListDiv.innerHTML = '';
@@ -247,16 +247,85 @@ function populateCardsSettings() {
       <label>Image:</label>
       <input type="file" data-index="${index}" class="card-image" accept="image/*">
       ${card.image ? `<img src="${card.image}" alt="Card ${index+1} Image" class="card-thumb">` : ''}
+      <label>Audio:</label>
+      <input type="file" data-index="${index}" class="card-audio" accept="audio/*">
+      ${card.audio ? `<audio src="${card.audio}" controls class="card-audio-preview"></audio>` : ''}
       <hr>
     `;
     cardsListDiv.appendChild(cardDiv);
     // Listen for image upload changes
     cardDiv.querySelector('.card-image').addEventListener('change', handleImageUpload);
+    // Listen for audio upload changes
+    cardDiv.querySelector('.card-audio').addEventListener('change', handleAudioUpload);
     // Listen for label and phonetic updates
     cardDiv.querySelector('.card-label').addEventListener('input', updateCardData);
     cardDiv.querySelector('.card-phonetic').addEventListener('input', updateCardData);
   });
 }
+
+// New: Handle audio file uploads
+function handleAudioUpload(e) {
+  const index = e.target.getAttribute('data-index');
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      currentConfig.cards[index].audio = evt.target.result;
+      populateCardsSettings(); // Refresh settings view to show audio preview
+    }
+    reader.readAsDataURL(file);
+  }
+}
+
+// Update selectCard to check for an audio file
+function selectCard(cardDiv, card) {
+  // Cancel any ongoing or queued speech
+  window.speechSynthesis.cancel();
+
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  cardDiv.classList.add('selected');
+
+  if (card.audio) {
+    // If an audio file exists, open the playback modal
+    openAudioModal(card.audio);
+  } else {
+    const utterance = new SpeechSynthesisUtterance(card.phonetic || card.label);
+    const selectedVoice = voices.find(v => v.voiceURI === currentConfig.voiceURI);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+// New: Open the audio playback modal and play the audio
+function openAudioModal(audioSrc) {
+  const audioModal = document.getElementById('audioModal');
+  const audioPlayer = document.getElementById('audioPlayer');
+  console.log("Opening audio modal with source:", audioSrc);
+  audioPlayer.src = audioSrc;
+  audioPlayer.load(); // Ensure the new source is loaded
+  audioModal.style.display = 'block';
+  audioPlayer.play().catch(err => console.error("Audio playback failed:", err));
+}
+
+// New: Close the audio playback modal
+function closeAudioModal() {
+  const audioModal = document.getElementById('audioModal');
+  const audioPlayer = document.getElementById('audioPlayer');
+  audioPlayer.pause();
+  audioPlayer.src = "";
+  audioModal.style.display = 'none';
+}
+
+// Attach event listener for the audio modal close button when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  // Existing initialization...
+  init();
+
+  // Audio modal close button event listener
+  document.getElementById('closeAudioModal').addEventListener('click', closeAudioModal);
+});
 
 // Handle image upload for a card
 function handleImageUpload(e) {
@@ -328,13 +397,19 @@ function selectCard(cardDiv, card) {
   document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
   cardDiv.classList.add('selected');
 
-  const utterance = new SpeechSynthesisUtterance(card.phonetic || card.label);
-  const selectedVoice = voices.find(v => v.voiceURI === currentConfig.voiceURI);
-  if (selectedVoice) {
-    utterance.voice = selectedVoice;
+  if (card.audio) {
+    // If an audio file exists, open the playback modal
+    openAudioModal(card.audio);
+  } else {
+    const utterance = new SpeechSynthesisUtterance(card.phonetic || card.label);
+    const selectedVoice = voices.find(v => v.voiceURI === currentConfig.voiceURI);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+    window.speechSynthesis.speak(utterance);
   }
-  window.speechSynthesis.speak(utterance);
 }
+
 
 // Update configuration and apply settings from the form
 function applySettings() {
