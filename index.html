@@ -39,7 +39,12 @@
           <label for="gridCols">Columns:</label>
           <input type="number" id="gridCols" name="gridCols" min="1" value="3">
         </fieldset>
-
+        <!-- Live Preview -->
+        <fieldset id="previewFieldset">
+          <legend>Preview</legend>
+          <!-- This example card updates instantly as settings change -->
+          <div id="exampleCard" class="card">Example Card</div>
+        </fieldset>
         <!-- Card & Text Size Settings -->
         <fieldset>
           <legend>Card &amp; Text Size</legend>
@@ -113,12 +118,7 @@
           <button type="button" id="loadConfigBtn">Load</button>
         </fieldset>
 
-        <!-- Live Preview -->
-        <fieldset id="previewFieldset">
-          <legend>Preview</legend>
-          <!-- This example card updates instantly as settings change -->
-          <div id="exampleCard" class="card">Example Card</div>
-        </fieldset>
+
 
         <button type="submit">Apply Settings</button>
       </form>

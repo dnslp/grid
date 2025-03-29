@@ -88,6 +88,43 @@ button:hover {
   background-color: rgba(0,0,0,0.4);
   animation: fadeIn 0.3s;
 }
+/* Enhanced styling for color input fields */
+input[type="color"] {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Optional: Style for a container around each color setting */
+.color-setting {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Increase spacing and make labels more prominent in the settings modal */
+fieldset {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+label {
+  font-weight: 500;
+}
+
+/* Additional styling improvements for the settings modal layout */
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 
 @keyframes fadeIn {
   from {opacity: 0;}

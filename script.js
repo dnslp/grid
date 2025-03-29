@@ -374,7 +374,9 @@ function updatePreview() {
   const fontColor = document.getElementById('fontColor').value;
   const fontBold = document.getElementById('fontBold').checked;
   const fontItalic = document.getElementById('fontItalic').checked;
+  const selectedBorder = document.getElementById('selectedBorder').value;
   
+  // Update the example card's size and typography
   exampleCard.style.width = cardSize + 'px';
   exampleCard.style.height = cardSize + 'px';
   exampleCard.style.fontSize = textSize + 'px';
@@ -383,9 +385,19 @@ function updatePreview() {
   exampleCard.style.color = fontColor;
   exampleCard.style.fontWeight = fontBold ? 'bold' : 'normal';
   exampleCard.style.fontStyle = fontItalic ? 'italic' : 'normal';
-  // Also update border color for preview if desired
-  exampleCard.style.borderColor = document.getElementById('selectedBorder').value;
+  
+  // Update border and layout to match actual card styles
+  exampleCard.style.border = "2px solid " + selectedBorder;
+  exampleCard.style.borderRadius = "8px";
+  exampleCard.style.display = "flex";
+  exampleCard.style.alignItems = "center";
+  exampleCard.style.justifyContent = "center";
+  exampleCard.style.boxSizing = "border-box";
+  
+  // Update the text content for a clear preview
+  exampleCard.textContent = "Example";
 }
+
 
 // Modal control functions
 function openModal() {
