@@ -1,5 +1,105 @@
-// Initialize default configuration
-console.log('v2')
+
+// Pre-made default configuration packs
+const preMadeConfigs = {
+  emotions: {
+    gridRows: 3,
+    gridCols: 3,
+    cardSize: 120,
+    textSize: 48,
+    backgroundColor: "#fafafa",
+    cardColor: "#ffffff",
+    selectedBorder: "#FF4081",
+    voiceURI: "",
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "😃", phonetic: "happy", image: "" },
+      { label: "😢", phonetic: "sad", image: "" },
+      { label: "😡", phonetic: "angry", image: "" },
+      { label: "😱", phonetic: "scared", image: "" },
+      { label: "😲", phonetic: "surprised", image: "" },
+      { label: "🤢", phonetic: "disgusted", image: "" },
+      { label: "😐", phonetic: "neutral", image: "" },
+      { label: "😕", phonetic: "confused", image: "" },
+      { label: "😍", phonetic: "love", image: "" }
+    ]
+  },
+  numbers: {
+    gridRows: 3,
+    gridCols: 3,
+    cardSize: 120,
+    textSize: 48,
+    backgroundColor: "#fefefe",
+    cardColor: "#ffffff",
+    selectedBorder: "#007AFF",
+    voiceURI: "",
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "1", phonetic: "one", image: "" },
+      { label: "2", phonetic: "two", image: "" },
+      { label: "3", phonetic: "three", image: "" },
+      { label: "4", phonetic: "four", image: "" },
+      { label: "5", phonetic: "five", image: "" },
+      { label: "6", phonetic: "six", image: "" },
+      { label: "7", phonetic: "seven", image: "" },
+      { label: "8", phonetic: "eight", image: "" },
+      { label: "9", phonetic: "nine", image: "" }
+    ]
+  },
+  foods: {
+    gridRows: 2,
+    gridCols: 3,
+    cardSize: 140,
+    textSize: 36,
+    backgroundColor: "#fff8e1",
+    cardColor: "#ffffff",
+    selectedBorder: "#FF7043",
+    voiceURI: "",
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "🍎", phonetic: "apple", image: "" },
+      { label: "🍕", phonetic: "pizza", image: "" },
+      { label: "🍔", phonetic: "burger", image: "" },
+      { label: "🍟", phonetic: "fries", image: "" },
+      { label: "🍣", phonetic: "sushi", image: "" },
+      { label: "🍦", phonetic: "ice cream", image: "" }
+    ]
+  },
+  basicCommunication: {
+    gridRows: 2,
+    gridCols: 4,
+    cardSize: 120,
+    textSize: 28,
+    backgroundColor: "#e0f7fa",
+    cardColor: "#ffffff",
+    selectedBorder: "#009688",
+    voiceURI: "",
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "Yes", phonetic: "yes", image: "" },
+      { label: "No", phonetic: "no", image: "" },
+      { label: "Maybe", phonetic: "maybe", image: "" },
+      { label: "I don't know", phonetic: "I don't know", image: "" },
+      { label: "More", phonetic: "more", image: "" },
+      { label: "Please", phonetic: "please", image: "" },
+      { label: "Thank you", phonetic: "thank you", image: "" },
+      { label: "All done", phonetic: "all done", image: "" }
+    ]
+  }
+};
+
+// (The existing currentConfig variable remains below, for example:)
 let currentConfig = {
   gridRows: 3,
   gridCols: 3,
@@ -9,16 +109,40 @@ let currentConfig = {
   cardColor: "#ffffff",
   selectedBorder: "#007AFF",
   voiceURI: "",
-  cards: [], // Each card: { label, phonetic, image }
+  cards: [],
   fontFamily: "sans-serif",
   fontColor: "#333333",
   fontBold: false,
   fontItalic: false
 };
 
+// Set up default configuration button event listeners when the DOM is ready.
+document.addEventListener('DOMContentLoaded', function() {
+  // Your existing initialization code...
+  init();
+
+  // Attach event listeners to the default config buttons.
+  document.querySelectorAll('.default-config-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const configKey = this.getAttribute('data-config');
+      if (preMadeConfigs[configKey]) {
+        // Optional: add a confirmation if you want to warn about overwriting unsaved changes.
+        if (confirm("Loading this default configuration will replace your current settings. Continue?")) {
+          // Deep clone the pre-made config so we don't modify the original.
+          currentConfig = JSON.parse(JSON.stringify(preMadeConfigs[configKey]));
+          populateSettingsForm();
+          generateGrid();
+          updatePreview();
+        }
+      }
+    });
+  });
+});
+// Initialize default configuration
+
 let voices = [];
 
-document.addEventListener('DOMContentLoaded', init);
+
 
 function init() {
   loadVoices();
