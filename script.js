@@ -248,7 +248,7 @@ function populateCardsSettings() {
       <input type="file" data-index="${index}" class="card-image" accept="image/*">
       ${card.image ? `<img src="${card.image}" alt="Card ${index+1} Image" class="card-thumb">` : ''}
       <label>Audio:</label>
-      <input type="file" data-index="${index}" class="card-audio" accept="audio/*">
+      <input type="file" data-index="${index}" class="card-audio" accept="audio/mpeg, audio/wav">
       ${card.audio ? `<audio src="${card.audio}" controls class="card-audio-preview"></audio>` : ''}
       <hr>
     `;
