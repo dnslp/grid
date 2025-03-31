@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
           populateSettingsForm();
           generateGrid();
           updatePreview();
+        console.log(preMadeConfigs)
         }
       }
     });
