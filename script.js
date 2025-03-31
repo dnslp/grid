@@ -5,7 +5,7 @@ const preMadeConfigs = {
     gridRows: 3,
     gridCols: 3,
     cardSize: 120,
-    textSize: 48,
+    textSize: 56,
     backgroundColor: "#fafafa",
     cardColor: "#ffffff",
     selectedBorder: "#FF4081",
@@ -30,7 +30,7 @@ const preMadeConfigs = {
     gridRows: 3,
     gridCols: 3,
     cardSize: 120,
-    textSize: 48,
+    textSize: 56,
     backgroundColor: "#fefefe",
     cardColor: "#ffffff",
     selectedBorder: "#007AFF",
@@ -52,10 +52,10 @@ const preMadeConfigs = {
     ]
   },
   foods: {
-    gridRows: 2,
+    gridRows: 3,
     gridCols: 3,
     cardSize: 140,
-    textSize: 36,
+    textSize: 56,
     backgroundColor: "#fff8e1",
     cardColor: "#ffffff",
     selectedBorder: "#FF7043",
@@ -69,13 +69,16 @@ const preMadeConfigs = {
       { label: "🍕", phonetic: "pizza", image: "" },
       { label: "🍔", phonetic: "burger", image: "" },
       { label: "🍟", phonetic: "fries", image: "" },
-      { label: "🍣", phonetic: "sushi", image: "" },
+      { label: "🍇", phonetic: "grapes", image: "" },
       { label: "🍦", phonetic: "ice cream", image: "" }
+      { label: "🍌", phonetic: "banana", image: "" },
+      { label: "🍝", phonetic: "spaghetti", image: "" },
+      { label: "🥦", phonetic: "broccoli", image: "" }
     ]
   },
   basicCommunication: {
-    gridRows: 2,
-    gridCols: 4,
+    gridRows: 4,
+    gridCols: 2,
     cardSize: 120,
     textSize: 28,
     backgroundColor: "#e0f7fa",
@@ -95,6 +98,85 @@ const preMadeConfigs = {
       { label: "Please", phonetic: "please", image: "" },
       { label: "Thank you", phonetic: "thank you", image: "" },
       { label: "All done", phonetic: "all done", image: "" }
+    ]
+  },
+    // New Spanish Basic Communication Pack
+  spanishCommunication: {
+    gridRows: 2,
+    gridCols: 4,
+    cardSize: 120,
+    textSize: 28,
+    backgroundColor: "#FFF3E0",
+    cardColor: "#ffffff",
+    selectedBorder: "#F57C00",
+    voiceURI: "",
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "Sí", phonetic: "sí", image: "" },
+      { label: "No", phonetic: "no", image: "" },
+      { label: "Tal vez", phonetic: "tal vez", image: "" },
+      { label: "No sé", phonetic: "no sé", image: "" },
+      { label: "Más", phonetic: "más", image: "" },
+      { label: "Por favor", phonetic: "por favor", image: "" },
+      { label: "Gracias", phonetic: "gracias", image: "" },
+      { label: "Terminado", phonetic: "terminado", image: "" }
+    ]
+  },
+
+  // New Fruits Pack
+  fruits: {
+    gridRows: 3,
+    gridCols: 3,
+    cardSize: 140,
+    textSize: 36,
+    backgroundColor: "#E8F5E9",
+    cardColor: "#ffffff",
+    selectedBorder: "#43A047",
+    voiceURI: "",
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "🍎", phonetic: "apple", image: "" },
+      { label: "🍌", phonetic: "banana", image: "" },
+      { label: "🍊", phonetic: "orange", image: "" },
+      { label: "🍇", phonetic: "grape", image: "" },
+      { label: "🍓", phonetic: "strawberry", image: "" },
+      { label: "🍍", phonetic: "pineapple", image: "" },
+      { label: "🥭", phonetic: "mango", image: "" },
+      { label: "🍑", phonetic: "peach", image: "" },
+      { label: "🍒", phonetic: "cherry", image: "" }
+    ]
+  },
+
+  // New Animals Pack
+  animals: {
+    gridRows: 3,
+    gridCols: 3,
+    cardSize: 120,
+    textSize: 32,
+    backgroundColor: "#E3F2FD",
+    cardColor: "#ffffff",
+    selectedBorder: "#1E88E5",
+    voiceURI: "",
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "🐶", phonetic: "dog", image: "" },
+      { label: "🐱", phonetic: "cat", image: "" },
+      { label: "🐰", phonetic: "rabbit", image: "" },
+      { label: "🐦", phonetic: "bird", image: "" },
+      { label: "🐸", phonetic: "frog", image: "" },
+      { label: "🐵", phonetic: "monkey", image: "" },
+      { label: "🐮", phonetic: "cow", image: "" },
+      { label: "🐷", phonetic: "pig", image: "" },
+      { label: "🐔", phonetic: "chicken", image: "" }
     ]
   }
 };
