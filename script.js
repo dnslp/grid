@@ -70,7 +70,7 @@ const preMadeConfigs = {
       { label: "🍔", phonetic: "burger", image: "" },
       { label: "🍟", phonetic: "fries", image: "" },
       { label: "🍇", phonetic: "grapes", image: "" },
-      { label: "🍦", phonetic: "ice cream", image: "" }
+      { label: "🍦", phonetic: "ice cream", image: "" },
       { label: "🍌", phonetic: "banana", image: "" },
       { label: "🍝", phonetic: "spaghetti", image: "" },
       { label: "🥦", phonetic: "broccoli", image: "" }
@@ -100,7 +100,6 @@ const preMadeConfigs = {
       { label: "All done", phonetic: "all done", image: "" }
     ]
   },
-    // New Spanish Basic Communication Pack
   spanishCommunication: {
     gridRows: 2,
     gridCols: 4,
@@ -125,8 +124,6 @@ const preMadeConfigs = {
       { label: "Terminado", phonetic: "terminado", image: "" }
     ]
   },
-
-  // New Fruits Pack
   fruits: {
     gridRows: 3,
     gridCols: 3,
@@ -152,8 +149,6 @@ const preMadeConfigs = {
       { label: "🍒", phonetic: "cherry", image: "" }
     ]
   },
-
-  // New Animals Pack
   animals: {
     gridRows: 3,
     gridCols: 3,
