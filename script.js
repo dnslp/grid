@@ -108,7 +108,7 @@ const preMadeConfigs = {
     backgroundColor: "#FFF3E0",
     cardColor: "#ffffff",
     selectedBorder: "#F57C00",
-    voiceURI: "",
+    voiceURI: "Eddy (Spanish (Mexico))",
     fontFamily: "sans-serif",
     fontColor: "#000000",
     fontBold: false,
