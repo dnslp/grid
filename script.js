@@ -173,7 +173,25 @@ const preMadeConfigs = {
       { label: "🐷", phonetic: "pig", image: "" },
       { label: "🐔", phonetic: "chicken", image: "" }
     ]
-  }
+  },
+    twoCard: {
+    gridRows: 1,            
+    gridCols: 2,            
+    cardSize: 200,         
+    textSize: 56,         
+    backgroundColor: "#f0f0f0",
+    cardColor: "#ffffff",
+    selectedBorder: "#007AFF",
+    voiceURI: "",           
+    fontFamily: "sans-serif",
+    fontColor: "#000000",
+    fontBold: false,
+    fontItalic: false,
+    cards: [
+      { label: "Name", phonetic: "", image: "" },
+      { label: "Item", phonetic: "", image: "" }
+    ]
+  },
 };
 
 // (The existing currentConfig variable remains below, for example:)
